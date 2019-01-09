@@ -1,0 +1,59 @@
+#packageNames <- c("animation","base64enc","gganimate","gapminder","htmltools")
+#install.packages(packageNames)
+
+
+data.file= "20170101_1231.csv"
+data <- read.csv(data.file, header=TRUE, sep=",")
+data.need<-data[,c("菏代ら戳","灿腶疊稬采")]
+date<-as.vector(data.need$菏代ら戳)
+PM2.5<-as.vector(as.double(data.need$灿腶疊稬采))
+data<-cbind(date,PM2.5)
+data = as.data.frame(data)
+data12<-data[1:31,]
+data12$month<- as.integer(12)
+data11<-data[32:60,]
+data11$month<- as.integer(11)
+data10<-data[61:91,]
+data10$month<- as.integer(10)
+data9<-data[92:121,]
+data9$month<- as.integer(9)
+data8<-data[122:151,]
+data8$month<- as.integer(8)
+data7<-data[152:179,]
+data7$month<- as.integer(7)
+data6<-data[180:209,]
+data6$month<- as.integer(6)
+data5<-data[210:239,]
+data5$month<- as.integer(5)
+data4<-data[240:269,]
+data4$month<- as.integer(4)
+data3<-data[270:300,]
+data3$month<- as.integer(3)
+data2<-data[301:328,]
+data2$month<- as.integer(2)
+data1<-data[329:359,]
+data1$month<- as.integer(1)
+data<-rbind(data12,data11)
+data<-rbind(data,data10)
+data<-rbind(data,data9)
+data<-rbind(data,data8)
+data<-rbind(data,data7)
+data<-rbind(data,data6)
+data<-rbind(data,data5)
+data<-rbind(data,data4)
+data<-rbind(data,data3)
+data<-rbind(data,data2)
+data<-rbind(data,data1)
+
+
+library(gapminder)
+library(ggplot2)
+library(gganimate)
+p2 <- ggplot(data, aes(date, PM2.5, frame = month)) +
+ geom_bar(stat="identity")+
+scale_x_continuous(breaks=c(1:12))
+#gganimate(p2, title_frame = FALSE)
+
+data$tmp <- factor(data$PM2.5, levels = levels(as.integer(factor(data$PM2.5))), ordered = TRUE )
+require(ggplot2)
+ggplot(data, aes(x=date, y = tmp)) + geom_bar(stat ="identity")
